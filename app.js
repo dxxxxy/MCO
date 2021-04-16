@@ -3,7 +3,6 @@ const app = express()
 const path = require("path")
 const bodyParser = require("body-parser")
 const sessions = require("express-session")
-const { response } = require("express")
 
 var session
 var port = process.env.PORT || 80
@@ -26,17 +25,23 @@ app.get("/", (req, res) => {
 app.get("/login", (req, res) => {
     session = req.session
     if (session.uniqueID) {
-        res.redirect("/redirects")
+        res.redirect("/redirects") //If logged in, redirect to /redirects
     }
     res.sendFile(path.join(__dirname, "/public/login/login.html"))
 })
 
-app.post("/login", (req, res) => {
-    //res.end(JSON.stringify(req.body))
+app.get("/account", (req, res) => {
     session = req.session
-    if (session.uniqueID) {
-        res.redirect("/redirects")
-    }
+    if (!session.uniqueID) {
+        res.redirect("/redirects") //If logged in, redirect to /redirects
+    } else res.sendFile(path.join(__dirname, "/public/account/account.html"))
+})
+
+app.post("/login", (req, res) => {
+    session = req.session
+        /*if (session.uniqueID) {
+            res.redirect("/redirects")
+        }*/
     if (req.body.username == "admin" || req.body.password == "admin") { //Implement MongoDB
         session.uniqueID = req.body.username
     }
@@ -46,20 +51,21 @@ app.post("/login", (req, res) => {
 app.get("/redirects", (req, res) => {
     session = req.session
     if (session.uniqueID) {
-        console.log(session.uniqueID)
-        res.redirect("/dashboard")
+        res.redirect("/dashboard") //If logged in, redirects to /dashboard
     } else {
-        res.end("Who are you??")
+        res.redirect("/login") //If not logged in, redirects to /login
     }
 })
 
 app.get("/logout", (req, res) => {
     req.session.destroy()
-    res.send("logged out")
+    res.redirect("/login") //If logged out, redirects to /login
 })
 
 app.get("/dashboard", (req, res) => {
-    res.sendFile(path.join(__dirname, "/public/dashboard/dashboard.html"))
+    if (!session.uniqueID) {
+        res.redirect("/redirects") //If logged in, redirect to /redirects
+    } else res.sendFile(path.join(__dirname, "/public/dashboard/dashboard.html"))
 })
 
 app.listen(port, () => {
