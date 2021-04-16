@@ -4,6 +4,7 @@ const path = require("path")
 const bodyParser = require("body-parser")
 const sessions = require("express-session")
 const mongoose = require("mongoose")
+const wge = require("wge");
 const Register = require(path.join(__dirname, "/models/register.js"))
 
 require('dotenv').config()
@@ -86,20 +87,12 @@ app.post("/login", (req, res) => {
     }, (err, res2) => {
         if (err) console.log(err)
         if (!res2) {
-            console.log("no account found")
             res.redirect("/redirects")
         } else if (res2.password === req.body.password) {
-            console.log("good pass")
-            console.log(res2.password, req.body.password)
             session.uniqueID = req.body.username
-            console.log(session, session.uniqueID)
             res.redirect("/redirects")
         } else res.redirect("/redirects")
     })
-
-    /*if (req.body.username == "admin" && req.body.password == "admin") { //Implement MongoDB
-        session.uniqueID = req.body.username
-    }*/
 })
 
 app.post("/register", (req, res) => {
@@ -108,22 +101,19 @@ app.post("/register", (req, res) => {
             res.redirect("/redirects")
         }*/
     Register.findOne({
-            username: req.body.username
-        }, (err, res) => {
-            if (err) console.log(err)
-            if (!res) {
-                const newRegister = new Register({
-                    username: req.body.username,
-                    password: req.body.password,
-                })
-                console.log("sucess register")
-                return newRegister.save()
-            }
-            console.log("already registered")
-        })
-        /*if (req.body.username == "admin" || req.body.password == "admin") { //Implement MongoDB
-            session.uniqueID = req.body.username
-        }*/
+        username: req.body.username
+    }, (err, res) => {
+        if (err) console.log(err)
+        if (!res) {
+            const newRegister = new Register({
+                username: req.body.username,
+                password: req.body.password,
+            })
+            console.log("sucess register")
+            return newRegister.save()
+        }
+        console.log("already registered")
+    })
     res.redirect("/redirects")
 })
 
@@ -142,7 +132,12 @@ app.get("/logout", (req, res) => {
 })
 
 app.get("/dashboard", (req, res) => {
+    session = req.session
+    username = session.uniqueID
     if (!session.uniqueID) {
         res.redirect("/redirects") //If logged in, redirect to /redirects
-    } else res.sendFile(path.join(__dirname, "/public/dashboard/dashboard.html"))
+    } else {
+        const dashboard = wge.render(path.join(__dirname, "public/dashboard/dashboard.html"), { username: username })
+        res.send(dashboard)
+    }
 })
