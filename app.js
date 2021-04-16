@@ -74,7 +74,10 @@ app.get("/account", (req, res) => {
     session = req.session
     if (!session.uniqueID) {
         res.redirect("/redirects") //If logged in, redirect to /redirects
-    } else res.sendFile(path.join(__dirname, "/public/account/account.html"))
+    } else {
+        const account = wge.render(path.join(__dirname, "/public/account/account.html"), { username: username })
+        res.send(account)
+    }
 })
 
 app.post("/login", (req, res) => {
@@ -102,19 +105,20 @@ app.post("/register", (req, res) => {
         }*/
     Register.findOne({
         username: req.body.username
-    }, (err, res) => {
+    }, (err, res2) => {
         if (err) console.log(err)
-        if (!res) {
+        if (!res2) {
             const newRegister = new Register({
                 username: req.body.username,
                 password: req.body.password,
             })
             console.log("sucess register")
-            return newRegister.save()
+            newRegister.save()
+            res.redirect("/redirects")
         }
         console.log("already registered")
+        res.redirect("/redirects")
     })
-    res.redirect("/redirects")
 })
 
 app.get("/redirects", (req, res) => {
