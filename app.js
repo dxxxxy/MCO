@@ -50,31 +50,24 @@ app.use(sessions({
     }
 }))
 
-app.get("/", (req, res) => {
-    res.redirect("/login")
-})
+app.get("/", (req, res) => { res.redirect("/login") })
 
 app.get("/login", (req, res) => {
     session = req.session
-    if (session.uniqueID) {
-        res.redirect("/redirects") //If logged in, redirect to /redirects
-    }
+    if (session.uniqueID) res.redirect("/redirects")
     res.sendFile(path.join(__dirname, "/public/login/login.html"))
 })
 
 app.get("/register", (req, res) => {
     session = req.session
-    if (session.uniqueID) {
-        res.redirect("/redirects") //If logged in, redirect to /redirects
-    }
+    if (session.uniqueID) res.redirect("/redirects")
     res.sendFile(path.join(__dirname, "/public/register/register.html"))
 })
 
 app.get("/account", (req, res) => {
     session = req.session
-    if (!session.uniqueID) {
-        res.redirect("/redirects") //If logged in, redirect to /redirects
-    } else {
+    if (!session.uniqueID) res.redirect("/redirects")
+    else {
         const account = wge.render(path.join(__dirname, "/public/account/account.html"), { username: username })
         res.send(account)
     }
@@ -82,16 +75,12 @@ app.get("/account", (req, res) => {
 
 app.post("/login", (req, res) => {
     session = req.session
-        /*if (session.uniqueID) {
-            res.redirect("/redirects")
-        }*/
     Register.findOne({
         username: req.body.username
     }, (err, res2) => {
         if (err) console.log(err)
-        if (!res2) {
-            res.redirect("/redirects")
-        } else if (res2.password === req.body.password) {
+        if (!res2) res.redirect("/redirects")
+        else if (res2.password === req.body.password) {
             session.uniqueID = req.body.username
             res.redirect("/redirects")
         } else res.redirect("/redirects")
@@ -100,9 +89,6 @@ app.post("/login", (req, res) => {
 
 app.post("/register", (req, res) => {
     session = req.session
-        /*if (session.uniqueID) {
-            res.redirect("/redirects")
-        }*/
     Register.findOne({
         username: req.body.username
     }, (err, res2) => {
@@ -112,35 +98,29 @@ app.post("/register", (req, res) => {
                 username: req.body.username,
                 password: req.body.password,
             })
-            console.log("sucess register")
             newRegister.save()
             res.redirect("/redirects")
         }
-        console.log("already registered")
         res.redirect("/redirects")
     })
 })
 
 app.get("/redirects", (req, res) => {
     session = req.session
-    if (session.uniqueID) {
-        res.redirect("/dashboard") //If logged in, redirects to /dashboard
-    } else {
-        res.redirect("/login") //If not logged in, redirects to /login
-    }
+    if (session.uniqueID) res.redirect("/dashboard")
+    else res.redirect("/login")
 })
 
 app.get("/logout", (req, res) => {
     req.session.destroy()
-    res.redirect("/login") //If logged out, redirects to /login
+    res.redirect("/login")
 })
 
 app.get("/dashboard", (req, res) => {
     session = req.session
     username = session.uniqueID
-    if (!session.uniqueID) {
-        res.redirect("/redirects") //If logged in, redirect to /redirects
-    } else {
+    if (!session.uniqueID) res.redirect("/redirects")
+    else {
         const dashboard = wge.render(path.join(__dirname, "public/dashboard/dashboard.html"), { username: username })
         res.send(dashboard)
     }
