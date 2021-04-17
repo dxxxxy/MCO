@@ -55,22 +55,13 @@ app.get("/", (req, res) => { res.redirect("/login") })
 app.get("/login", (req, res) => {
     session = req.session
     if (session.uniqueID) res.redirect("/redirects")
-    res.sendFile(path.join(__dirname, "/public/login/login.html"))
+    else res.sendFile(path.join(__dirname, "/public/login/login.html"))
 })
 
 app.get("/register", (req, res) => {
     session = req.session
     if (session.uniqueID) res.redirect("/redirects")
-    res.sendFile(path.join(__dirname, "/public/register/register.html"))
-})
-
-app.get("/account", (req, res) => {
-    session = req.session
-    if (!session.uniqueID) res.redirect("/redirects")
-    else {
-        const account = wge.render(path.join(__dirname, "/public/account/account.html"), { username: username })
-        res.send(account)
-    }
+    else res.sendFile(path.join(__dirname, "/public/register/register.html"))
 })
 
 app.post("/login", (req, res) => {

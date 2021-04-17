@@ -1,15 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{data.username} - MCO</title>
+    <title>Dashboard - MCO</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
-    {data.username}
+    <div class="login-content">
+        <form action="/connect" method="POST">
+            <h2 class="title">Connect</h2>
+            <input type="text" class="connect" name="email" placeholder="Email">
+            <input type="password" class="connect" name="password" placeholder="Password">
+            <input type="submit" class="connect" value="Connect">
+        </form>
+    </div>
+    <script type="text/javascript" src="main.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,14 @@
+body {
+    background-image: url("bg.png");
+    background-color: rgb(19, 17, 17);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+}
+
+.connect {
+    border: rgb(72, 161, 72) 2px solid;
+    border-radius: 25px;
+    text-align: center;
+    outline: none;
+}
