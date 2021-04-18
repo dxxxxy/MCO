@@ -12,3 +12,36 @@ body {
     text-align: center;
     outline: none;
 }
+
+#email,
+#email::placeholder,
+#pass,
+#pass::placeholder,
+#submit {
+    color: lightgray;
+    position: absolute;
+    background-color: black;
+    left: 1.5%;
+    width: 11.5%;
+    box-sizing: border-box;
+}
+
+#email {
+    top: 8.5%;
+}
+
+#pass {
+    top: 12.5%;
+}
+
+#submit {
+    top: 16.5%
+}
+
+#connect {
+    border: rgb(72, 161, 72) 2px solid;
+    text-align: center;
+    outline: none;
+    width: 250px;
+    height: 250px;
+}

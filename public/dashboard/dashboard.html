@@ -10,11 +10,11 @@
 
 <body>
     <div class="login-content">
-        <form action="/connect" method="POST">
-            <h2 class="title">Connect</h2>
-            <input type="text" class="connect" name="email" placeholder="Email">
-            <input type="password" class="connect" name="password" placeholder="Password">
-            <input type="submit" class="connect" value="Connect">
+        <form id="connect" action="/connect" method="POST">
+            <h2 class="title">{data.username}</h2>
+            <input id="email" type="text" class="connect" name="email" placeholder="Email">
+            <input id="pass" type="password" class="connect" name="password" placeholder="Password">
+            <input id="submit" type="submit" class="connect" value="Connect">
         </form>
     </div>
     <script type="text/javascript" src="main.js"></script>

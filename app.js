@@ -12,7 +12,7 @@ require('dotenv').config()
 var session
 var port = process.env.PORT || 80
 
-mongoose.connect(process.env.DATABASE, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
+mongoose.connect( /*"mongodb://localhost:27017/MCO"*/ process.env.DATABASE, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
 mongoose.connection.on('connected', () => {
     app.listen(port, () => {
         console.log(`Listening on port ${port}`)
@@ -91,8 +91,7 @@ app.post("/register", (req, res) => {
             })
             newRegister.save()
             res.redirect("/redirects")
-        }
-        res.redirect("/redirects")
+        } else res.redirect("/redirects")
     })
 })
 
