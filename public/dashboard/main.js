@@ -25,6 +25,7 @@ inputs.forEach(input => {
     input.addEventListener("blur", remcl);
 });
 
+
 const socket = io()
 const submit = document.getElementById('submit')
 submit.addEventListener('click', e => {
@@ -52,6 +53,22 @@ socket.on('receive-message', msg => {
         scrollToBottom();
     }
     //chatBox.innerHTML += `${msg}<br>`
+})
+
+socket.on("login-success", (host, username) => {
+    document.getElementById("host").style.display = "none"
+    document.getElementById("email").style.display = "none"
+    document.getElementById("pass").style.display = "none"
+    document.getElementById("submit").style.display = "none"
+    const body = document.getElementById("body")
+    fetch(`https://api.minetools.eu/uuid/${username}`)
+        .then(res => res.json())
+        .then(json => {
+            console.log(json.id, username)
+            body.src = `https://visage.surgeplay.com/full/${json.id}.png`
+        })
+    document.getElementById("connect-content").style.height = "40vh"
+    document.getElementById("status").innerHTML = `Connected <br> (${host})`
 })
 
 const messages = document.getElementById('chat-content');

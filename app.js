@@ -136,6 +136,7 @@ io.on('connection', socket => {
         let bot = mineflayer.createBot({ host, username, password })
         instances.set(socket.id, bot)
         bot.on("login", () => {
+            socket.emit("login-success", host, bot.username)
             console.log(`Successfully connected to ${host} as ${bot.username}`)
         })
         bot.on("spawn", () => {

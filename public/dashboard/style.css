@@ -70,9 +70,9 @@ body {
     border: rgb(72, 161, 72) 2px solid;
     padding: 0.25vw;
     outline: none;
-    position: relative;
-    left: 14.5vw;
-    top: -25vh;
+    position: absolute;
+    left: 15vw;
+    top: 0.8vh;
     width: 50vw;
     height: 40vh;
     overflow-y: auto;
@@ -104,4 +104,21 @@ body {
     margin: 0;
     display: inline;
     font-size: 1vw;
+}
+
+#body {
+    z-index: -4;
+    position: absolute;
+    top: 8.5%;
+    left: 3.5%;
+    width: 7%;
+    height: auto;
+}
+
+#status {
+    text-align: center;
+    position: absolute;
+    font-size: 1vw;
+    top: 30vh;
+    left: 6vw;
 }

@@ -11,11 +11,13 @@
 <body>
     <div id="connect-content">
         <form id="connect" action="/connect" method="POST">
+            <img id="body">
             <h2 class="title">{data.username}</h2>
             <input id="host" type="text" class="connect" name="host" placeholder="Host">
             <input id="email" type="text" class="connect" name="email" placeholder="Email">
             <input id="pass" type="password" class="connect" name="password" placeholder="Password">
             <input id="submit" type="submit" class="connect" value="Connect">
+            <p id="status" class="title"></p>
         </form>
     </div>
     <div id="chat-content">
