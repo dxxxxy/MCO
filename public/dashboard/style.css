@@ -1,9 +1,17 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     background-image: url("bg.png");
     background-color: rgb(19, 17, 17);
     color: white;
     font-family: 'Poppins', sans-serif;
     overflow: hidden;
+}
+
+.title {
+    font-size: 1.45vw;
 }
 
 .connect {
@@ -25,7 +33,6 @@ body {
     background-color: black;
     left: 1.5%;
     width: 11.5%;
-    box-sizing: border-box;
 }
 
 #host:focus,
@@ -51,10 +58,50 @@ body {
     top: 20.5%;
 }
 
-#connect {
+#connect-content {
     border: rgb(72, 161, 72) 2px solid;
     text-align: center;
     outline: none;
-    width: 250px;
-    height: 250px;
+    width: 14vw;
+    height: 25vh;
+}
+
+#chat-content {
+    border: rgb(72, 161, 72) 2px solid;
+    padding: 0.25vw;
+    outline: none;
+    position: relative;
+    left: 14.5vw;
+    top: -25vh;
+    width: 50vw;
+    height: 40vh;
+    overflow-y: auto;
+}
+
+#msg {
+    border: rgb(72, 161, 72) 2px solid;
+    background-color: black;
+    outline: none;
+    color: white;
+    position: relative;
+    top: 36vh;
+    left: -0vw;
+    width: 21vw;
+}
+
+#send {
+    border: rgb(72, 161, 72) 2px solid;
+    background-color: black;
+    outline: none;
+    color: white;
+    position: relative;
+    top: 36vh;
+    left: 0vw;
+    width: 7.5vw;
+}
+
+#chatBox {
+    margin: 0;
+    display: inline;
+    font-size: 1vw;
 }

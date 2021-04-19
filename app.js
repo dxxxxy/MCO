@@ -124,15 +124,30 @@ let instances = new Map()
 io.on('connection', socket => {
     console.log('User connected!')
     socket.on('disconnect', () => {
-        instances.get(socket.id).quit()
-        instances.delete(socket.id)
-        console.log("Bot disconnected")
+        if (instances.has(socket.id)) {
+            instances.get(socket.id).quit()
+            instances.delete(socket.id)
+            console.log("Bot disconnected")
+        }
     })
     socket.on("connect-server", (host, username, password) => {
+        if (instances.has(socket.id)) return
         console.log("Starting bot")
-        instances.set(socket.id, mineflayer.createBot({ host, username, password }))
-        instances.get(socket.id).on("spawn", () => {
-            console.log(`Successfully connected to ${host} as ${username}`)
+        let bot = mineflayer.createBot({ host, username, password })
+        instances.set(socket.id, bot)
+        bot.on("login", () => {
+            console.log(`Successfully connected to ${host} as ${bot.username}`)
+        })
+        bot.on("spawn", () => {
+            console.log(`Spawned in ${host}`)
+        })
+        bot.on('message', (msg, pos) => {
+            if (pos != "chat") return
+            let text = msg.getText()
+            socket.emit("receive-message", text)
+        })
+        socket.on("send-message", msg => {
+            bot.chat(msg)
         })
     })
 })

@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div class="login-content">
+    <div id="connect-content">
         <form id="connect" action="/connect" method="POST">
             <h2 class="title">{data.username}</h2>
             <input id="host" type="text" class="connect" name="host" placeholder="Host">
@@ -18,6 +18,13 @@
             <input id="submit" type="submit" class="connect" value="Connect">
         </form>
     </div>
+    <div id="chat-content">
+        <div class="message"></div>
+    </div>
+    <form id="chat" action="/chat" method="POST">
+        <input id="msg" type="text" class="chat" name="msg" placeholder="Message">
+        <input id="send" type="submit" class="chat" value="Send">
+    </form>
     <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="main.js"></script>
 </body>
