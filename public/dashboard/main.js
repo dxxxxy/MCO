@@ -24,3 +24,14 @@ inputs.forEach(input => {
     input.addEventListener("focus", addcl);
     input.addEventListener("blur", remcl);
 });
+
+const socket = io()
+const btn = document.getElementById('submit')
+btn.addEventListener('click', e => {
+    e.preventDefault();
+    socket.emit('connect-server', document.getElementById("host").value, document.getElementById("email").value, document.getElementById("pass").value)
+})
+
+socket.on('chat:message', msg => {
+
+})

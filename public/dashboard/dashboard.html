@@ -12,11 +12,13 @@
     <div class="login-content">
         <form id="connect" action="/connect" method="POST">
             <h2 class="title">{data.username}</h2>
+            <input id="host" type="text" class="connect" name="host" placeholder="Host">
             <input id="email" type="text" class="connect" name="email" placeholder="Email">
             <input id="pass" type="password" class="connect" name="password" placeholder="Password">
             <input id="submit" type="submit" class="connect" value="Connect">
         </form>
     </div>
+    <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="main.js"></script>
 </body>
 

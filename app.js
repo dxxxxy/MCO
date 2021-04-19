@@ -1,9 +1,12 @@
 const express = require("express")
-const app = express()
-const path = require("path")
+const app = require('express')()
+const http = require('http').createServer(app)
+const path = require('path')
+const io = require('socket.io')(http)
 const bodyParser = require("body-parser")
 const sessions = require("express-session")
 const mongoose = require("mongoose")
+const mineflayer = require('mineflayer')
 const wge = require("wge");
 const Register = require(path.join(__dirname, "/models/register.js"))
 
@@ -14,7 +17,7 @@ var port = process.env.PORT || 80
 
 mongoose.connect( /*"mongodb://localhost:27017/MCO"*/ process.env.DATABASE, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
 mongoose.connection.on('connected', () => {
-    app.listen(port, () => {
+    http.listen(port, () => {
         console.log(`Listening on port ${port}`)
     })
 })
@@ -114,4 +117,22 @@ app.get("/dashboard", (req, res) => {
         const dashboard = wge.render(path.join(__dirname, "public/dashboard/dashboard.html"), { username: username })
         res.send(dashboard)
     }
+})
+
+let instances = new Map()
+
+io.on('connection', socket => {
+    console.log('User connected!')
+    socket.on('disconnect', () => {
+        instances.get(socket.id).quit()
+        instances.delete(socket.id)
+        console.log("Bot disconnected")
+    })
+    socket.on("connect-server", (host, username, password) => {
+        console.log("Starting bot")
+        instances.set(socket.id, mineflayer.createBot({ host, username, password }))
+        instances.get(socket.id).on("spawn", () => {
+            console.log(`Successfully connected to ${host} as ${username}`)
+        })
+    })
 })

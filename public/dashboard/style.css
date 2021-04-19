@@ -13,6 +13,8 @@ body {
     outline: none;
 }
 
+#host,
+#host::placeholder,
 #email,
 #email::placeholder,
 #pass,
@@ -26,16 +28,27 @@ body {
     box-sizing: border-box;
 }
 
-#email {
+#host:focus,
+#email:focus,
+#pass:focus {
+    transition: 0.5s ease-in;
+    border-color: white;
+}
+
+#host {
     top: 8.5%;
 }
 
-#pass {
+#email {
     top: 12.5%;
 }
 
+#pass {
+    top: 16.5%;
+}
+
 #submit {
-    top: 16.5%
+    top: 20.5%;
 }
 
 #connect {
