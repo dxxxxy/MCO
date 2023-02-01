@@ -23,7 +23,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "mineflayer": "^3.6.0",
-    "mongoose": "^5.12.4",
+    "mongoose": "^5.13.15",
     "socket.io": "^4.0.1",
     "wge": "^0.0.5"
   }
